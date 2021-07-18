@@ -1,0 +1,7 @@
+Mini Project Code:
+Built 3 AMIs with Packer: 
+Tool Server 1 contains GIT, OpenJDK11 (Java) and Ansible
+Tool Server 2 contains GIT, OpenJDK11 (Java), Packer and Terraform
+Build Server contains Jenkins
+Used Terraform to provision a VPC network and 3 Subnets in 3 availability Zones
+also provisioned 2 Security_Groups for the tool and build servers
