@@ -32,7 +32,7 @@ build {
       "curl https://download.java.net/openjdk/jdk11/ri/openjdk-11+28_linux-x64_bin.tar.gz -O",
       "tar xvf openjdk-11*_bin.tar.gz",
       "echo Installing Terraform",
-      "curl https://releases.hashicorp.com/terraform/1.0.1/terraform_1.0.2_linux_amd64.zip -O",
+      "curl https://releases.hashicorp.com/terraform/1.0.2/terraform_1.0.2_linux_amd64.zip -O",
       "unzip terraform_1.0.2_linux_amd64.zip",
       "sudo cp terraform /usr/local/bin/",
       "echo Installing Packer",

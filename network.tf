@@ -1,44 +1,29 @@
+# VPC, Subnets, IGW, Routing Table & Subnet Association Creation #
+
+# VPC Creation #
 resource "aws_vpc" "training_vpc" {
   cidr_block = "10.0.0.0/16"
 
   tags = {
-    Name = "training"
+    Name = "training_vpc"
   }
 }
 
-resource "aws_subnet" "subnet_1" {
+# Subnet Creation #
+resource "aws_subnet" "training_subnet" {
+  count                   = var.instance_count
   vpc_id                  = aws_vpc.training_vpc.id
-  cidr_block              = "10.0.0.0/24"
-  availability_zone       = "ca-central-1a"
+  cidr_block              = var.subnet_cidr_block[count.index]
+  availability_zone       = var.availability_zone[count.index]
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "subnet_1"
+    Name = "subnet_${count.index + 1}"
   }
 }
 
-resource "aws_subnet" "subnet_2" {
-  vpc_id                  = aws_vpc.training_vpc.id
-  cidr_block              = "10.0.1.0/24"
-  availability_zone       = "ca-central-1b"
-  map_public_ip_on_launch = "true"
-
-  tags = {
-    Name = "subnet_2"
-  }
-}
-
-resource "aws_subnet" "subnet_3" {
-  vpc_id            = aws_vpc.training_vpc.id
-  cidr_block        = "10.0.2.0/24"
-  availability_zone = "ca-central-1a"
-
-  tags = {
-    Name = "subnet_3"
-  }
-}
-
-resource "aws_internet_gateway" "training-igw" {
+# Internet Gateway Creation # 
+resource "aws_internet_gateway" "training_igw" {
   vpc_id = aws_vpc.training_vpc.id
 
   tags = {
@@ -46,12 +31,13 @@ resource "aws_internet_gateway" "training-igw" {
   }
 }
 
+# Route Table Creation # 
 resource "aws_route_table" "training_rt" {
   vpc_id = aws_vpc.training_vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.training-igw.id
+    cidr_block = var.rt_cidr_block
+    gateway_id = aws_internet_gateway.training_igw.id
   }
 
   tags = {
@@ -59,17 +45,9 @@ resource "aws_route_table" "training_rt" {
   }
 }
 
-resource "aws_route_table_association" "training_rt_ass_1" {
-  subnet_id      = aws_subnet.subnet_1.id
+# Route Table Association # 
+resource "aws_route_table_association" "training_rt" {
+  count          = var.instance_count
+  subnet_id      = aws_subnet.training_subnet[count.index].id
   route_table_id = aws_route_table.training_rt.id
 }
-
-resource "aws_route_table_association" "training_rt_ass_2" {
-  subnet_id      = aws_subnet.subnet_2.id
-  route_table_id = aws_route_table.training_rt.id
-}
-
-resource "aws_route_table_association" "training_rt_ass_3" {
-  subnet_id      = aws_subnet.subnet_3.id
-  route_table_id = aws_route_table.training_rt.id
-} 
