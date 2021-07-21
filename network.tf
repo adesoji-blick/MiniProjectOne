@@ -34,10 +34,10 @@ resource "aws_internet_gateway" "training_igw" {
 # Route Table Creation # 
 resource "aws_route_table" "training_rt" {
   vpc_id = aws_vpc.training_vpc.id
-
   route {
     cidr_block = var.rt_cidr_block
     gateway_id = aws_internet_gateway.training_igw.id
+
   }
 
   tags = {

@@ -18,6 +18,10 @@ variable "instance_count" {
   default = "3"
 }
 
+variable "sg_count" {
+  default = "2"
+}
+
 variable "ami_filter" {
   default = ["packer-amazon-linux-ami1", "packer-amazon-linux-ami2", "packer-ubuntu-ami"]
 }
@@ -30,6 +34,10 @@ variable "rt_cidr_block" {
   default = "0.0.0.0/24"
 }
 
+variable "sg_cidr_block" {
+  default = "0.0.0.0/0"
+}
+
 variable "availability_zone" {
   default = ["ca-central-1a", "ca-central-1b", "ca-central-1a"]
 }
@@ -38,10 +46,22 @@ variable "tag_name" {
   default = ["tool_sev_1", "tool_sev_2", "build_sev"]
 }
 
+variable "sg_name" {
+  default = "tool_server_sg, tool_server_sg, build_server_sg"
+}
+
 variable "environment" {
   default = "development"
 }
 
 variable "role" {
   default = "devops_team"
+}
+
+variable "ingress_protocol" {
+  default = "tcp"
+}
+
+variable "egress_protocol" {
+  default = "-1"
 }
