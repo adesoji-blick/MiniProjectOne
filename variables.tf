@@ -47,7 +47,7 @@ variable "tag_name" {
 }
 
 variable "sg_name" {
-  default = "tool_server_sg, tool_server_sg, build_server_sg"
+  default = ["tool_server_sg1", "tool_server_sg2", "build_server_sg"]
 }
 
 variable "environment" {

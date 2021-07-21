@@ -1,9 +1,8 @@
 # Security Group Creation #
 
 resource "aws_security_group" "server_sg" {
-  # count  = var.instance_count
-  # name   = var.sg_name
-  name   = "training_sg"
+  count  = var.instance_count
+  name   = var.sg_name[count.index]
   vpc_id = aws_vpc.training_vpc.id
   # description             = "Allow SSH and HTTP inbound traffic"
   ingress {

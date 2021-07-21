@@ -14,7 +14,7 @@ resource "aws_instance" "mini_project" {
   count                  = var.instance_count
   key_name               = var.ssh_key
   subnet_id              = aws_subnet.training_subnet[count.index].id
-  vpc_security_group_ids = [aws_security_group.server_sg.id]
+  vpc_security_group_ids = [aws_security_group.server_sg[count.index].id]
 
 
   tags = {
