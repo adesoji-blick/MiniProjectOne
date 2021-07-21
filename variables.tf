@@ -65,3 +65,7 @@ variable "ingress_protocol" {
 variable "egress_protocol" {
   default = "-1"
 }
+
+variable "port_id" {
+  default = ["80", "80", "8080"]
+}

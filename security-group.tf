@@ -13,8 +13,8 @@ resource "aws_security_group" "server_sg" {
   }
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = var.port_id[count.index]
+    to_port     = var.port_id[count.index]
     protocol    = var.ingress_protocol
     cidr_blocks = [var.sg_cidr_block]
   }
